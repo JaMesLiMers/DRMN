@@ -2,32 +2,32 @@
 
 **Context Does Matter: End-to-end Panoptic Narrative Grounding with Deformable Attention Refined Matching Network**
 
-[论文](https://arxiv.org/abs/2310.16616) · [数据准备](docs/数据下载说明.md) · [实现说明](docs/方法对应.md) · [复现状态](docs/最终一致性核对.md)
+[Paper](https://arxiv.org/abs/2310.16616) · [Dataset Preparation](docs/数据下载说明.md) · [Implementation Notes](docs/方法对应.md) · [Reproducibility Status](docs/最终一致性核对.md)
 
-DRMN 面向全景叙述定位（Panoptic Narrative Grounding）：给定一幅图像和描述其中场景的叙述文本，预测各名词短语对应的像素级分割掩码。模型通过多尺度可变形注意力引入视觉上下文，并在迭代匹配过程中细化与短语相关的图像特征。
+DRMN addresses **Panoptic Narrative Grounding**: given an image and a narrative caption, the model predicts a pixel-level segmentation mask for each target noun phrase. It incorporates visual context through multi-scale deformable attention and iteratively refines the image features associated with each phrase.
 
-## 方法概述
+## Method Overview
 
-DRMN 的主要组成如下：
+The model consists of four main components:
 
-1. **图像与文本编码**：使用冻结的 ResNet101/FPN 和 BERT 提取多尺度视觉特征与文本表示。
-2. **初始图文匹配**：通过多尺度可变形编码构建文本与图像像素的初始响应图。
-3. **迭代特征细化**：选择与短语最相关的 top-k 像素，引入多尺度上下文，并将更新后的视觉特征聚合至文本表示。
-4. **掩码预测**：输出各阶段的分割预测，以 BCE 与 Dice 损失进行中间监督。
+1. **Visual and textual encoding.** Frozen ResNet101/FPN and BERT encoders extract multi-scale image features and text representations.
+2. **Initial matching.** Multi-scale deformable encoding produces an initial text-to-pixel response map.
+3. **Iterative refinement.** The model selects the top-k relevant pixels, refines their representations using multi-scale context, and aggregates the resulting visual features into the text representations.
+4. **Mask prediction.** Segmentation predictions are produced at each stage, with intermediate supervision using BCE and Dice losses.
 
-评测采用 Average Recall，并分别报告单数／复数短语及 thing／stuff 类别的结果。
+Evaluation uses Average Recall, reported overall and separately for singular/plural phrases and thing/stuff categories.
 
-## 发布状态
+## Release Status
 
-当前版本提供模型实现、数据预处理、推理、评测及有限步数训练接口。Python 3.10 / CPU 环境下的 18 项单元与集成测试已通过。
+This release includes the model, annotation preprocessing, inference, evaluation, and a bounded-step training interface. All 18 unit and integration tests have passed in a Python 3.10 CPU environment.
 
-- **预训练权重**：暂未提供；推理和真实数据评测需要兼容的 DRMN checkpoint。
-- **运行环境**：当前验证基于纯 PyTorch 可变形注意力参考实现；GPU 运行及性能尚未验证。
-- **复现范围**：已验证计算流程和参数结构兼容性，尚未完成原权重在真实数据集上的指标复核。
+- **Pretrained weights:** not currently distributed. Inference and evaluation on real data require a compatible DRMN checkpoint.
+- **Runtime:** validated with the pure PyTorch reference implementation of deformable attention. GPU execution and performance have not been validated.
+- **Reproducibility:** computation paths and parameter compatibility have been checked; the reported paper metrics have not been re-evaluated using the original weights and dataset.
 
-部分模块由归档源码和缓存恢复，部分依赖经过适配。论文公式、保存实现及实验配置之间的已知差异见[一致性核对报告](docs/最终一致性核对.md)。
+Some modules were recovered from archived source and bytecode, and some dependencies were adapted. Known differences between the paper, archived implementation, and experiment configurations are documented in the [consistency report](docs/最终一致性核对.md). Supplementary documentation under `docs/` is currently in Chinese.
 
-## 安装
+## Installation
 
 ```bash
 git clone https://github.com/JaMesLiMers/DRMN.git
@@ -37,13 +37,13 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-`requirements.txt` 固定了已验证的 CPU 环境依赖。环境配置说明见[环境与依赖](docs/环境与依赖.md)。
+`requirements.txt` pins the dependencies used in the validated CPU environment. See [Environment Setup](docs/环境与依赖.md) for additional details.
 
-## 数据准备
+## Dataset Preparation
 
-本项目使用 **COCO 2017** 图像、panoptic 分割标注及 **Panoptic Narrative Grounding** 叙述标注。下载入口和目录约定见[数据下载说明](docs/数据下载说明.md)。
+The project uses **COCO 2017** images and panoptic segmentation annotations, together with **Panoptic Narrative Grounding** narrative annotations. Download sources and the expected directory layout are provided in the [dataset guide](docs/数据下载说明.md).
 
-准备原始标注后，生成对应划分的 dataloader JSON：
+After obtaining the raw annotations, generate the dataloader JSON for the desired split:
 
 ```bash
 python tools/preprocess_annotations.py \
@@ -51,7 +51,7 @@ python tools/preprocess_annotations.py \
   --splits val2017
 ```
 
-使用兼容 checkpoint 提取冻结编码器特征：
+Extract frozen encoder features using a compatible checkpoint:
 
 ```bash
 python tools/encode_data.py \
@@ -64,11 +64,11 @@ python tools/encode_data.py \
   --output /path/to/prepared_val
 ```
 
-缓存格式及标注对齐约定见[数据格式说明](docs/数据准备.md)。
+See [Data Format](docs/数据准备.md) for the cached feature format and annotation alignment requirements.
 
-## 推理
+## Inference
 
-创建输入文件 `input.json`：
+Create an input file named `input.json`:
 
 ```json
 {
@@ -78,7 +78,7 @@ python tools/encode_data.py \
 }
 ```
 
-`noun_ids` 与 BERT WordPiece token 逐项对应，不包含 `[CLS]` 和 `[SEP]`。非目标 token 标为 `0`，同一名词短语使用相同的正整数编号。
+Each entry in `noun_ids` corresponds to a BERT WordPiece token, excluding `[CLS]` and `[SEP]`. Use `0` for non-target tokens and the same positive integer for tokens belonging to the same noun phrase.
 
 ```bash
 python tools/predict.py \
@@ -88,9 +88,9 @@ python tools/predict.py \
   --output artifacts/predictions
 ```
 
-输出包含模型尺度下的掩码、用于可视化的原图尺寸 PNG，以及预测记录。已有缓存特征时，可使用 `tools/visualize.py` 导出掩码。
+Outputs include masks at the model output resolution, PNG masks resized to the original image dimensions for visualization, and prediction metadata. To export masks from cached features, use `tools/visualize.py`.
 
-## 评测
+## Evaluation
 
 ```bash
 python tools/evaluate.py \
@@ -100,17 +100,17 @@ python tools/evaluate.py \
   --output artifacts/runs/evaluation.json
 ```
 
-评测结果包含整体与各分组的 Average Recall、样本数量、配置及数据来源。权重加载前执行完整性检查，并严格匹配模型参数。也可单独检查 checkpoint：
+The output records overall and per-group Average Recall, sample counts, configuration, and dataset provenance. Checkpoint integrity is checked before loading, and model parameters are matched strictly. Checkpoints can also be inspected independently:
 
 ```bash
 python tools/check_checkpoint.py /path/to/model_best.pth
 ```
 
-## 训练接口与流程验证
+## Training Interface and Smoke Test
 
-`tools/train.py` 接收已准备的冻结特征，支持阶段监督、有限步数参数更新及优化器状态恢复。该入口不包含原实验完整的多 GPU 和 epoch 调度流程。
+`tools/train.py` consumes prepared frozen features and supports stage-wise supervision, bounded-step parameter updates, and optimizer state restoration. It does not include the complete multi-GPU and epoch scheduling pipeline of the original experiments.
 
-默认 `--max-steps 0` 仅执行一次前向与反向传播，不更新参数。以下命令无需真实数据或预训练权重：
+The default `--max-steps 0` performs one forward and backward pass without updating parameters. The following smoke test requires neither real data nor pretrained weights:
 
 ```bash
 python tools/prepare_data.py \
@@ -124,30 +124,30 @@ python tools/train.py \
   --output artifacts/runs/backward_smoke
 ```
 
-以上使用合成样本与随机初始化，仅用于验证计算流程，不用于评估模型质量。`configs/smoke.yaml` 为测试配置；`configs/drmn.yaml` 的实验参数来源和待确认项见[实现说明](docs/方法对应.md)。
+This test uses synthetic inputs and random initialization to validate the computation pipeline; it does not measure model quality. `configs/smoke.yaml` is a test configuration. The provenance and unresolved settings in `configs/drmn.yaml` are described in the [implementation notes](docs/方法对应.md).
 
-## 测试
+## Tests
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-测试覆盖采样与梯度、掩码损失、短语对齐、Average Recall、权重严格加载、保存／加载一致性，以及图像和文本到掩码的计算流程。
+Tests cover sampling and gradients, mask losses, phrase alignment, Average Recall, strict checkpoint loading, prediction consistency after saving and loading, and the image-and-text-to-mask computation pipeline.
 
-## 项目结构
+## Repository Structure
 
 ```text
-configs/        模型配置、测试配置与 BERT 词表
-drmn/           模型、算子、编码器、数据处理与评测
-tools/          预处理、特征提取、推理、评测与训练入口
-scripts/        验证脚本
-tests/          单元与集成测试
-docs/           数据、环境、方法及复现说明
-artifacts/      本地输出目录，生成内容默认不纳入版本管理
+configs/        Model and test configurations; BERT vocabulary
+drmn/           Models, operators, encoders, data processing, and evaluation
+tools/          Preprocessing, feature extraction, inference, evaluation, and training
+scripts/        Verification scripts
+tests/          Unit and integration tests
+docs/           Data, environment, implementation, and reproducibility documentation
+artifacts/      Local outputs; generated files are excluded from version control
 ```
 
-## 致谢与许可
+## Acknowledgements and License
 
-本项目基于 [PPMN](https://github.com/dzh19990407/PPMN) 与 [Panoptic Narrative Grounding](https://github.com/BCV-Uniandes/PNG) 的研究工作，使用 [Deformable DETR](https://github.com/fundamentalvision/Deformable-DETR) 的可变形注意力参考实现，并包含源自 Detectron2、BERT 和 OpenMMLab 的实现或适配代码。
+This project builds on [PPMN](https://github.com/dzh19990407/PPMN) and [Panoptic Narrative Grounding](https://github.com/BCV-Uniandes/PNG), uses the deformable attention reference implementation from [Deformable DETR](https://github.com/fundamentalvision/Deformable-DETR), and includes implementations or adaptations originating from Detectron2, BERT, and OpenMMLab.
 
-项目沿用 [MIT License](LICENSE)。第三方代码保留原版权与许可声明；Deformable DETR 的 Apache 2.0 许可见[第三方许可文件](docs/LICENSE-Deformable-DETR)。
+The repository retains its [MIT License](LICENSE). Third-party code retains its original copyright and license notices. The Apache 2.0 license for the Deformable DETR reference implementation is included [here](docs/LICENSE-Deformable-DETR).
