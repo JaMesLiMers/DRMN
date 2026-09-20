@@ -10,7 +10,7 @@
     "465 BERT state entries",
     "legacy core 4-stage exact comparison on synthetic input",
     "legacy R101/FPN 2-shape exact comparison with nontrivial BN statistics",
-    "18 tests"
+    "26 tests"
   ],
   "retained_discrepancies": [
     "paper linear Dice denominator vs original squared Dice denominator"

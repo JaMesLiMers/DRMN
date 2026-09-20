@@ -2,7 +2,7 @@
 
 **Context Does Matter: End-to-end Panoptic Narrative Grounding with Deformable Attention Refined Matching Network**
 
-[Paper](https://arxiv.org/abs/2310.16616) · [Workflows](docs/workflows.md) · [Dataset Preparation](docs/数据下载说明.md) · [Implementation Notes](docs/方法对应.md) · [Reproducibility Status](docs/最终一致性核对.md)
+[Paper](https://arxiv.org/abs/2310.16616) · [Workflows](docs/workflows.md) · [Dataset Preparation](docs/dataset-download.md) · [Implementation Notes](docs/method-mapping.md) · [Reproducibility Status](docs/consistency-audit.md)
 
 DRMN addresses **Panoptic Narrative Grounding**: given an image and a narrative caption, the model predicts a pixel-level segmentation mask for each target noun phrase. It incorporates visual context through multi-scale deformable attention and iteratively refines the image features associated with each phrase.
 
@@ -25,7 +25,7 @@ This release includes the model, annotation preprocessing, independent pretraine
 - **Runtime:** validated with the pure PyTorch reference implementation of deformable attention. GPU execution and performance have not been validated.
 - **Reproducibility:** computation paths and parameter compatibility have been checked; the reported paper metrics have not been re-evaluated using the original weights and dataset.
 
-Some modules were recovered from archived source and bytecode, and some dependencies were adapted. Known differences between the paper, archived implementation, and experiment configurations are documented in the [consistency report](docs/最终一致性核对.md). The [workflow guide](docs/workflows.md) is in English; additional audit and data documentation is in Chinese.
+Some modules were recovered from archived source and bytecode, and some dependencies were adapted. Known differences between the paper, archived implementation, and experiment configurations are documented in the [consistency report](docs/consistency-audit.md). The [workflow guide](docs/workflows.md) is in English; all supplementary audit and data documentation is also in English.
 
 ## Installation
 
@@ -37,11 +37,11 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-`requirements.txt` pins the dependencies used in the validated CPU environment. See [Environment Setup](docs/环境与依赖.md) for additional details.
+`requirements.txt` pins the dependencies used in the validated CPU environment. See [Environment Setup](docs/environment.md) for additional details.
 
 ## Dataset Preparation
 
-The project uses **COCO 2017** images and panoptic segmentation annotations, together with **Panoptic Narrative Grounding** narrative annotations. Download sources and the expected directory layout are provided in the [dataset guide](docs/数据下载说明.md).
+The project uses **COCO 2017** images and panoptic segmentation annotations, together with **Panoptic Narrative Grounding** narrative annotations. Download sources and the expected directory layout are provided in the [dataset guide](docs/dataset-download.md).
 
 After obtaining the raw annotations, generate the dataloader JSON for the desired split:
 
@@ -67,7 +67,7 @@ python tools/encode_data.py \
 
 An intact original checkpoint containing both encoders can alternatively be supplied through `--checkpoint`. A trained DRMN head is not required for feature extraction.
 
-See [Data Format](docs/数据准备.md) for the cached feature format and annotation alignment requirements.
+See [Data Format](docs/data-format.md) for the cached feature format and annotation alignment requirements.
 
 ## Inference
 
@@ -142,7 +142,7 @@ python tools/train.py \
   --output artifacts/runs/backward_smoke
 ```
 
-This test uses synthetic inputs and random initialization to validate the computation pipeline; it does not measure model quality. `configs/smoke.yaml` is a test configuration. The provenance and unresolved settings in `configs/drmn.yaml` are described in the [implementation notes](docs/方法对应.md).
+This test uses synthetic inputs and random initialization to validate the computation pipeline; it does not measure model quality. `configs/smoke.yaml` is a test configuration. The provenance and unresolved settings in `configs/drmn.yaml` are described in the [implementation notes](docs/method-mapping.md).
 
 ## Analysis and Ablations
 

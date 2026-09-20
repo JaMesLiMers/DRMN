@@ -1,7 +1,7 @@
 # decompyle3 version 3.9.3
 # Python bytecode version base 3.7.0 (3394)
 # Decompiled from: Python 3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]
-# Recovered from original Python bytecode; see docs/最终一致性核对.md.
+# Recovered from original Python bytecode; see docs/consistency-audit.md.
 # Compiled at: 2023-05-31 12:48:04
 # Size of source mod 2**32: 8131 bytes
 import torch

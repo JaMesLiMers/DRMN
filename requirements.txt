@@ -1,4 +1,4 @@
-# 已验证环境：Python 3.10，CPU。CUDA wheel/原 CUDA 扩展未验证。
+# Validated environment: Python 3.10, CPU. CUDA wheels and the original CUDA extension are unvalidated.
 --extra-index-url https://download.pytorch.org/whl/cpu
 boto3==1.43.98
 botocore==1.43.98

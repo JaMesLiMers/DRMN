@@ -1,3 +1,3 @@
-# 本地实验输出
+# Local artifacts
 
-此目录用于本地日志、合成测试样本、预测和权重，默认不提交 Git。仓库不附训练权重或真实数据。原始备份和损坏文件没有包含在发布内容中。
+This directory holds local logs, synthetic samples, predictions, and checkpoints. Generated files are excluded from version control. The release does not include trained weights, real datasets, original backups, or damaged files.

@@ -1,3 +1,5 @@
-# 损失
+# Losses
 
-统一导出 CrossEntropyLoss(use_sigmoid=True) 和 DiceLoss。原实现位于 models/head_model；runtime.stage_loss 在每阶段对有效 noun token 累加 BCE + Dice，不让 padding 参与损失。具体最终训练入口已损坏，因此当前训练链属于依据保存代码和论文重建，未声称逐字恢复该入口。
+This package exports `CrossEntropyLoss(use_sigmoid=True)` and `DiceLoss` from the archived implementations under `drmn/models/head_model`. `drmn.runtime.stage_loss` sums BCE + Dice over stages for valid noun tokens, excluding padding.
+
+The complete original training entry point was damaged. Current training workflows are reconstructed from saved code and the paper, not claimed as verbatim recovery of that entry point. The archived Dice formula is preserved; its difference from the printed paper formula is documented in the [consistency audit](../../docs/consistency-audit.md).
