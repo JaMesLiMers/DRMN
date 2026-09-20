@@ -1,0 +1,36 @@
+# 已验证环境：Python 3.10，CPU。CUDA wheel/原 CUDA 扩展未验证。
+--extra-index-url https://download.pytorch.org/whl/cpu
+boto3==1.43.98
+botocore==1.43.98
+certifi==2026.7.22
+charset-normalizer==3.5.1
+contourpy==1.3.2
+cycler==0.12.1
+filelock==3.32.3
+fonttools==4.65.0
+fsspec==2026.7.0
+h5py==3.12.1
+idna==3.20
+Jinja2==3.1.6
+jmespath==1.1.0
+kiwisolver==1.5.1
+MarkupSafe==3.0.3
+matplotlib==3.9.4
+mpmath==1.3.0
+networkx==3.4.2
+numpy==1.26.4
+packaging==26.3
+pillow==12.3.0
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+PyYAML==6.0.2
+requests==2.34.2
+s3transfer==0.19.2
+scipy==1.14.1
+six==1.17.0
+sympy==1.13.1
+torch==2.5.1+cpu
+torchvision==0.20.1+cpu
+tqdm==4.70.1
+typing_extensions==4.16.0
+urllib3==2.8.0

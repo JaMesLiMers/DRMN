@@ -1,0 +1,13 @@
+# Main model structure matches all 281 parameter names/shapes in archived checkpoint.
+# Sampling count 100 appears in source and two ablation logs; best-run header is damaged.
+# Seed 0 is for engineering determinism, not a confirmed paper seed.
+seed: 0
+cpu_threads: 2
+model:
+  num_stages: 3
+  num_points: 100
+  max_seg_num: 64
+  max_sequence_length: 230
+training:
+  learning_rate: 0.0001
+  epochs: 20  # paper record only; tools/train.py never starts an epoch loop

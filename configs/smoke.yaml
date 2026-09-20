@@ -1,0 +1,10 @@
+# Synthetic structural validation only. Not paper experiment settings.
+seed: 0
+cpu_threads: 2
+model:
+  num_stages: 3
+  num_points: 4
+  max_seg_num: 2
+  max_sequence_length: 8
+training:
+  learning_rate: 0.0001

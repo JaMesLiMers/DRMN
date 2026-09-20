@@ -1,0 +1,38 @@
+[
+  {
+    "input": [
+      128,
+      128
+    ],
+    "max_absolute_error": {
+      "p2": 0.0,
+      "p3": 0.0,
+      "p4": 0.0,
+      "p5": 0.0
+    },
+    "max_error_over_max_reference": {
+      "p2": 0.0,
+      "p3": 0.0,
+      "p4": 0.0,
+      "p5": 0.0
+    }
+  },
+  {
+    "input": [
+      117,
+      151
+    ],
+    "max_absolute_error": {
+      "p2": 0.0,
+      "p3": 0.0,
+      "p4": 0.0,
+      "p5": 0.0
+    },
+    "max_error_over_max_reference": {
+      "p2": 0.0,
+      "p3": 0.0,
+      "p4": 0.0,
+      "p5": 0.0
+    }
+  }
+]

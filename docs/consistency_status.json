@@ -1,0 +1,25 @@
+{
+  "scope": {
+    "real_data_preparation": false,
+    "full_training": false,
+    "checkpoint_distribution": false
+  },
+  "passed": [
+    "281 main state entries",
+    "538 image encoder state entries",
+    "465 BERT state entries",
+    "legacy core 4-stage exact comparison on synthetic input",
+    "legacy R101/FPN 2-shape exact comparison with nontrivial BN statistics",
+    "18 tests"
+  ],
+  "retained_discrepancies": [
+    "paper linear Dice denominator vs original squared Dice denominator"
+  ],
+  "unverified": [
+    "best experiment sampling count and seed",
+    "missing original CUDA implementation equality",
+    "original full training entry",
+    "paper evaluation metrics"
+  ],
+  "release_label": "recovered research code; no checkpoint; no reproduction claim"
+}
