@@ -1,0 +1,11 @@
+# New runnable variant; not a verified historical experiment configuration.
+seed: 0
+cpu_threads: 2
+model:
+  num_stages: 0
+  num_points: 100
+  max_seg_num: 64
+  max_sequence_length: 230
+training:
+  learning_rate: 0.0001
+  epochs: 20

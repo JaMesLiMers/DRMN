@@ -25,7 +25,7 @@ def main():
             values.extend(ious.tolist());types.extend(sample["ann_types"].tolist());categories.extend(sample["ann_categories"].tolist())
     source_path=Path(a.data)/"SOURCE.json"
     provenance=json.loads(source_path.read_text()) if source_path.exists() else {"verified":False}
-    report={"dataset_provenance":provenance,"metrics":summarize(values,types,categories),"images":len(files),"checkpoint":str(Path(a.checkpoint).resolve()),"config":cfg,"protocol":"legacy discrete AR; prepared masks at model output geometry"}
+    report={"per_phrase":{"ious":values,"ann_types":types,"ann_categories":categories},"dataset_provenance":provenance,"metrics":summarize(values,types,categories),"images":len(files),"checkpoint":str(Path(a.checkpoint).resolve()),"config":cfg,"protocol":"legacy discrete AR; prepared masks at model output geometry"}
     out=Path(a.output);out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(report,indent=2))
     print(json.dumps(report,indent=2))
 

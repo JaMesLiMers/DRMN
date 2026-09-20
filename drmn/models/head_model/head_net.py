@@ -17,7 +17,11 @@ class HeadNet(nn.Module):
         super(HeadNet, self).__init__()
 
         self.cfg=cfg
-        self.encoder_head = DeformEncoderHead(cfg=cfg)
+        if getattr(cfg, "use_image_encoder", True):
+            self.encoder_head = DeformEncoderHead(cfg=cfg, num_encoder_layers=getattr(cfg, "encoder_layers", 2))
+        else:
+            from .deform_encoder_head_no_encoder import DeformEncoderHead as ProjectionOnly
+            self.encoder_head = ProjectionOnly(cfg=cfg)
 
         self.rpn_head = ConvKernelHead()
         self.roi_head = DeformIterHead(

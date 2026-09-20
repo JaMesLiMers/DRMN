@@ -69,8 +69,8 @@
   },
   {
     "source": "models/head_model/head_net.py",
-    "sha256": "383c2a5bf25b485bd67a95f42c999a00d34ba53c893ff691b1bf5201713dfb74",
-    "status": "copied_without_changes_imports_pending",
+    "sha256": "677a7e395a3849edf6460cf7cffa7cabd8fa43906651fe1e6206970bf16a5557",
+    "status": "copied_without_changes_imports_pending; explicit_structural_variants_or_diagnostic_export_added",
     "destination": "drmn/models/head_model/head_net.py",
     "source_sha256": "7cd1d93a016ff854e55bcbcfd79b378f22538d3888deed5cb81bed38b78d429f",
     "pre_adaptation_sha256": "7cd1d93a016ff854e55bcbcfd79b378f22538d3888deed5cb81bed38b78d429f"
@@ -85,8 +85,8 @@
   },
   {
     "source": "models/head_model/kernel_update_head.py",
-    "sha256": "d7d560b0e4787b10151948ae48b6631ab42a49b49385e8dcd6cf9aaaabb91b54",
-    "status": "copied_without_changes_imports_pending",
+    "sha256": "626e65d750450e68e0b1affb485808d3503ce94327ba0054eb4539e46f39cb20",
+    "status": "copied_without_changes_imports_pending; explicit_structural_variants_or_diagnostic_export_added",
     "destination": "drmn/models/head_model/kernel_update_head.py",
     "source_sha256": "2adc6ab01ab09bcb1ae93371cf160b4d677c66a2c4ba85083b499d5557fc5985",
     "pre_adaptation_sha256": "2adc6ab01ab09bcb1ae93371cf160b4d677c66a2c4ba85083b499d5557fc5985"

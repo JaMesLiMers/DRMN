@@ -2,7 +2,7 @@
 
 **Context Does Matter: End-to-end Panoptic Narrative Grounding with Deformable Attention Refined Matching Network**
 
-[Paper](https://arxiv.org/abs/2310.16616) · [Dataset Preparation](docs/数据下载说明.md) · [Implementation Notes](docs/方法对应.md) · [Reproducibility Status](docs/最终一致性核对.md)
+[Paper](https://arxiv.org/abs/2310.16616) · [Workflows](docs/workflows.md) · [Dataset Preparation](docs/数据下载说明.md) · [Implementation Notes](docs/方法对应.md) · [Reproducibility Status](docs/最终一致性核对.md)
 
 DRMN addresses **Panoptic Narrative Grounding**: given an image and a narrative caption, the model predicts a pixel-level segmentation mask for each target noun phrase. It incorporates visual context through multi-scale deformable attention and iteratively refines the image features associated with each phrase.
 
@@ -19,13 +19,13 @@ Evaluation uses Average Recall, reported overall and separately for singular/plu
 
 ## Release Status
 
-This release includes the model, annotation preprocessing, inference, evaluation, and a bounded-step training interface. All 18 unit and integration tests have passed in a Python 3.10 CPU environment.
+This release includes the model, annotation preprocessing, independent pretrained encoder loading, epoch-based training with resume and distributed execution, inference, evaluation, and analysis exports. All 26 unit and integration tests have passed in a Python 3.10 CPU environment. Two-process CPU forward/backward synchronization has also been validated without optimizer updates.
 
 - **Pretrained weights:** not currently distributed. Inference and evaluation on real data require a compatible DRMN checkpoint.
 - **Runtime:** validated with the pure PyTorch reference implementation of deformable attention. GPU execution and performance have not been validated.
 - **Reproducibility:** computation paths and parameter compatibility have been checked; the reported paper metrics have not been re-evaluated using the original weights and dataset.
 
-Some modules were recovered from archived source and bytecode, and some dependencies were adapted. Known differences between the paper, archived implementation, and experiment configurations are documented in the [consistency report](docs/最终一致性核对.md). Supplementary documentation under `docs/` is currently in Chinese.
+Some modules were recovered from archived source and bytecode, and some dependencies were adapted. Known differences between the paper, archived implementation, and experiment configurations are documented in the [consistency report](docs/最终一致性核对.md). The [workflow guide](docs/workflows.md) is in English; additional audit and data documentation is in Chinese.
 
 ## Installation
 
@@ -51,18 +51,21 @@ python tools/preprocess_annotations.py \
   --splits val2017
 ```
 
-Extract frozen encoder features using a compatible checkpoint:
+Extract frozen encoder features using separately downloaded pretrained encoders (see [weight sources](docs/workflows.md#pretrained-encoders)):
 
 ```bash
 python tools/encode_data.py \
   --config configs/drmn.yaml \
-  --checkpoint /path/to/model_best.pth \
+  --fpn-weights /path/to/model_final_cafdb1.pkl \
+  --bert-weights /path/to/pytorch_model.bin \
   --png-json /path/to/png/annotations/png_coco_val2017_dataloader.json \
   --panoptic-json /path/to/png/annotations/panoptic_val2017.json \
   --panoptic-masks /path/to/png/annotations/panoptic_segmentation/val2017 \
   --images /path/to/png/images/val2017 \
   --output /path/to/prepared_val
 ```
+
+An intact original checkpoint containing both encoders can alternatively be supplied through `--checkpoint`. A trained DRMN head is not required for feature extraction.
 
 See [Data Format](docs/数据准备.md) for the cached feature format and annotation alignment requirements.
 
@@ -88,6 +91,8 @@ python tools/predict.py \
   --output artifacts/predictions
 ```
 
+For a head-only checkpoint produced by `train_epochs.py`, also pass `--fpn-weights` and `--bert-weights` using the same encoders used to prepare its training features.
+
 Outputs include masks at the model output resolution, PNG masks resized to the original image dimensions for visualization, and prediction metadata. To export masks from cached features, use `tools/visualize.py`.
 
 ## Evaluation
@@ -106,9 +111,22 @@ The output records overall and per-group Average Recall, sample counts, configur
 python tools/check_checkpoint.py /path/to/model_best.pth
 ```
 
-## Training Interface and Smoke Test
+## Training
 
-`tools/train.py` consumes prepared frozen features and supports stage-wise supervision, bounded-step parameter updates, and optimizer state restoration. It does not include the complete multi-GPU and epoch scheduling pipeline of the original experiments.
+Train on cached frozen features with a fixed Adam learning rate:
+
+```bash
+python tools/train_epochs.py \
+  --config configs/drmn.yaml \
+  --data /path/to/prepared_train --val-data /path/to/prepared_val \
+  --output artifacts/runs/drmn --epochs 20
+```
+
+The runner supports gradient accumulation, epoch-boundary resume, validation, and `last.pth` / `best.pth` checkpoint saving. `torchrun` enables distributed execution. See the [workflow guide](docs/workflows.md) for commands, checkpoint requirements, and the newly defined batching protocol. This runner is a reconstruction, not a recovered copy of the original experiment launcher. Full training and GPU execution have not been validated.
+
+## Smoke Test
+
+`tools/train.py` provides a bounded-step diagnostic interface.
 
 The default `--max-steps 0` performs one forward and backward pass without updating parameters. The following smoke test requires neither real data nor pretrained weights:
 
@@ -126,13 +144,19 @@ python tools/train.py \
 
 This test uses synthetic inputs and random initialization to validate the computation pipeline; it does not measure model quality. `configs/smoke.yaml` is a test configuration. The provenance and unresolved settings in `configs/drmn.yaml` are described in the [implementation notes](docs/方法对应.md).
 
+## Analysis and Ablations
+
+`tools/analyze.py` exports stage-wise probability maps, top-k pixel attention, deformable sampling plots, and the underlying numeric arrays. `tools/plot_recall.py` plots overall and grouped recall curves from actual evaluation outputs. See [analysis commands and interpretation](docs/workflows.md#analysis).
+
+[Structural variants](configs/ablations/README.md) cover projection-only image encoding, three image encoder layers, and initial matching without iterative refinement. These are executable analysis configurations; historical ablation results and exact paper figure selections are not claimed.
+
 ## Tests
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-Tests cover sampling and gradients, mask losses, phrase alignment, Average Recall, strict checkpoint loading, prediction consistency after saving and loading, and the image-and-text-to-mask computation pipeline.
+Tests cover sampling and gradients, mask losses, phrase alignment, Average Recall, strict checkpoint loading, prediction consistency after saving and loading, the image-and-text-to-mask computation pipeline, pretrained state loading, training/resume control, structural variants, and analysis exports.
 
 ## Repository Structure
 

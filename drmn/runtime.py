@@ -14,8 +14,10 @@ from drmn.models.head_model.dice_loss import DiceLoss
 def read_config(path):
     cfg = yaml.safe_load(Path(path).read_text())
     for key in ("num_stages", "num_points", "max_seg_num", "max_sequence_length"):
-        if not isinstance(cfg["model"].get(key), int) or cfg["model"][key] <= 0:
-            raise ValueError(f"model.{key} must be a positive integer")
+        if not isinstance(cfg["model"].get(key), int) or cfg["model"][key] < (0 if key == "num_stages" else 1):
+            raise ValueError(f"model.{key} has an invalid integer value")
+    if cfg["model"].get("encoder_layers", 2) < 1:
+        raise ValueError("encoder_layers must be positive")
     return cfg
 
 

@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 import torch
+from drmn.pretrained import load_encoders
 from drmn.runtime import read_config,build_model,load_checkpoint
 from drmn.models.frozen_encoders import FrozenImageEncoder,FrozenTextEncoder,read_resized_bgr
 from drmn.datasets.png import annotation_targets,prepare_masks
@@ -13,14 +14,18 @@ from drmn.datasets.features import load_sample
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    for key in ["config","checkpoint","png-json","panoptic-json","panoptic-masks","images","output"]:p.add_argument("--"+key,required=True)
+    for key in ["config","png-json","panoptic-json","panoptic-masks","images","output"]:p.add_argument("--"+key,required=True)
+    p.add_argument("--fpn-weights");p.add_argument("--bert-weights")
     p.add_argument("--bert-config",default="configs/bert/bert_config.json");p.add_argument("--vocab",default="configs/bert/vocab.txt")
+    p.add_argument("--checkpoint")
     p.add_argument("--device",default="cpu");p.add_argument("--short-edge",type=int,default=800);p.add_argument("--max-size",type=int,default=1333);p.add_argument("--limit",type=int)
     a=p.parse_args();cfg=read_config(a.config);torch.set_num_threads(cfg.get("cpu_threads",2))
     # Strict integrity and model checks before processing a dataset.
-    model=build_model(cfg);state=load_checkpoint(model,a.checkpoint);del model
-    image=FrozenImageEncoder();image.load_original(state["fpn_model_state"]);image.to(a.device).eval()
-    text=FrozenTextEncoder(a.bert_config,a.vocab,cfg["model"]["max_sequence_length"]);text.load_original(state["bert_model_state"]);text.to(a.device).eval();del state
+    state=None
+    if a.checkpoint:
+        model=build_model(cfg);state=load_checkpoint(model,a.checkpoint);del model
+    image,text,encoder_source=load_encoders(a,cfg,state)
+    del state
     records=json.loads(Path(a.png_json).read_text());panoptic=json.loads(Path(a.panoptic_json).read_text())
     images={x["id"]:x for x in panoptic["images"]};anns={x["image_id"]:x for x in panoptic["annotations"]};categories={x["id"]:x for x in panoptic["categories"]}
     out=Path(a.output);out.mkdir(parents=True,exist_ok=True);written=[]
@@ -44,7 +49,7 @@ def main():
         if path.exists():raise FileExistsError(path)
         np.savez_compressed(path,**data);load_sample(path,cfg);written.append(path.name)
     if not written:raise ValueError("No valid annotations encoded")
-    manifest={"checkpoint":str(Path(a.checkpoint).resolve()),"png_json":str(Path(a.png_json).resolve()),"count":len(written),"files":written,"short_edge":a.short_edge,"max_size":a.max_size,"synthetic":False,"full_dataset":a.limit is None}
+    manifest={"checkpoint":str(Path(a.checkpoint).resolve()) if a.checkpoint else None,"encoders":encoder_source,"png_json":str(Path(a.png_json).resolve()),"count":len(written),"files":written,"short_edge":a.short_edge,"max_size":a.max_size,"synthetic":False,"full_dataset":a.limit is None}
     (out/"SOURCE.json").write_text(json.dumps(manifest,indent=2));print(json.dumps(manifest,indent=2))
 
 if __name__=="__main__":main()

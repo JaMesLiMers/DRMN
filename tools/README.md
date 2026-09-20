@@ -12,3 +12,10 @@
 在项目根目录执行 `python tools/<name>.py --help`。本次完整真实数据与原权重尚未通过验收。
 
 - preprocess_annotations.py：移植原 PNG WordPiece/标签预处理，修复本地路径，不要求模型权重。
+
+- train_epochs.py：epoch 训练、梯度累积、验证、保存和恢复，支持 torchrun；--validate-only 不更新参数。
+- analyze.py：每轮概率图、top-k 注意力、可变形采样及数值导出。
+- plot_recall.py：从实际评测 per_phrase 结果绘制五组 recall 曲线。
+- encode_data.py / predict.py：支持 --fpn-weights 与 --bert-weights 独立冻结编码器权重。
+
+完整参数示例和验证范围见 [workflows.md](../docs/workflows.md)。

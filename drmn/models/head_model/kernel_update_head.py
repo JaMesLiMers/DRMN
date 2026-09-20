@@ -123,6 +123,7 @@ class KernelUpdateHead(nn.Module):
                 mode='bilinear',
                 align_corners=False)
 
+        debug_results["deformable_attention_weights"] = debug_results["attention_weights"]
         debug_results["attention_weights"] = attention_weights.detach().cpu().numpy()
         debug_results["mask_x"] = mask_x.detach().cpu().numpy()
         debug_results["mask_feat"] = mask_feat.detach().cpu().numpy()
