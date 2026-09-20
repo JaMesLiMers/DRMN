@@ -17,4 +17,4 @@ Run `python tools/<name>.py --help` from the repository root for arguments.
 | `analyze.py` | Export stage-wise probability maps, top-k attention, deformable sampling plots, and numeric arrays |
 | `plot_recall.py` | Plot five groups of recall curves from actual per-phrase evaluation results |
 
-See [workflows](../docs/workflows.md) for complete examples and verification limits. Original-weight and full real-data acceptance remain outstanding.
+See [workflows](../docs/workflows.md) for complete examples and verification limits.

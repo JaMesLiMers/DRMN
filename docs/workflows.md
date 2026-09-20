@@ -23,7 +23,7 @@ python tools/train_epochs.py --config configs/drmn.yaml \
   --resume artifacts/runs/drmn/last.pth
 ```
 
-`--epochs` is the total desired epoch count. The learning rate is fixed at the configured value (default Adam, 1e-4); no undocumented schedule is introduced. `last.pth` is saved at each completed epoch. With validation, `best.pth` tracks the highest overall Average Recall. `history.jsonl` records epoch losses and metrics. Checkpoints contain the DRMN head, optimizer, epoch/step counters and per-rank Torch RNG states; frozen encoders remain separate.
+`--epochs` is the total desired epoch count. The learning rate is fixed at the configured value (default Adam, 1e-4). `last.pth` is saved at each completed epoch. With validation, `best.pth` tracks the highest overall Average Recall. `history.jsonl` records epoch losses and metrics. Checkpoints contain the DRMN head, optimizer, epoch/step counters and per-rank Torch RNG states; frozen encoders remain separate.
 
 Resume requires the same model/configuration, feature file contents and filenames, validation split, accumulation, device type, and process count. Resume occurs at epoch boundaries. It does not recover a partially completed epoch. The seed determines each epoch's shuffle. The current training path uses Torch randomness; Python/NumPy randomness is not used in sample loading or model forward.
 
@@ -38,7 +38,7 @@ python -m torch.distributed.run --standalone --nproc_per_node=3 \
   --output artifacts/runs/drmn_ddp --device cuda --epochs 20
 ```
 
-Validation runs on rank zero. Distributed execution uses NCCL on CUDA and Gloo on CPU. The pure PyTorch deformable attention reference may be substantially slower than the unavailable original CUDA extension.
+Validation runs on rank zero. Distributed execution uses NCCL on CUDA and Gloo on CPU. Performance relative to the original CUDA extension has not been benchmarked.
 
 ## Validation without training
 
@@ -69,12 +69,10 @@ python tools/analyze.py --config configs/drmn.yaml \
   --phrase 0 --output artifacts/analysis
 ```
 
-Multiple result files and labels may be supplied for comparisons. No baseline scores are generated. Curves show empirical recall versus IoU thresholds; the evaluator separately preserves the archived discrete AR calculation.
+Multiple result files and labels may be supplied for comparisons. Curves show empirical recall versus IoU thresholds; the evaluator separately preserves the archived discrete AR calculation.
 
-Analysis exports include initial and refinement probability maps, per-round top-k cross-attention, deformable sampling at four feature levels, `diagnostics.npz`, and selection metadata. Probability maps average tokens in the selected phrase; attention/sampling visualizations use its first token. Coordinates use normalized padded image geometry. The sampling plot selects the 50 largest deformable weights per level across pixels, heads and offsets. It uses probability-map backgrounds, not the original paper's image overlays. Full numeric coordinates, including out-of-bounds samples, are retained. This is a transparent analysis tool, not a reconstruction of the paper's exact figure selection.
+Analysis exports include initial and refinement probability maps, per-round top-k cross-attention, deformable sampling at four feature levels, `diagnostics.npz`, and selection metadata. Probability maps average tokens in the selected phrase; attention/sampling visualizations use its first token. Coordinates use normalized padded image geometry. The sampling plot selects the 50 largest deformable weights per level across pixels, heads and offsets. It uses probability-map backgrounds, not the original paper's image overlays. Full numeric coordinates, including out-of-bounds samples, are retained. The selection rule is independent of the paper's original figure selection.
 
-## Coverage and limits
+## Reproducibility
 
-The main architecture, frozen feature path, intermediate losses, inference, AR evaluation, epoch runner, resume, distributed entry point, structural variants, and analysis exporters are present. The default architecture still matches all 281 archived head parameter names/shapes. New variant configs require their own compatible weights and do not claim historical ablation results.
-
-There is no usable original checkpoint in this release. No real dataset was downloaded and no model retraining was performed. The paper's reported metrics, exact historical experiment configuration, full GPU training, and original CUDA-kernel parity remain unverified. The archived squared-denominator Dice loss is preserved despite the linear-denominator expression in the paper. See the [detailed consistency audit](consistency-audit.md).
+See [implementation notes](consistency-audit.md) for checkpoint availability, validation coverage, and differences from the paper and historical training protocol.

@@ -19,13 +19,12 @@ Evaluation uses Average Recall, reported overall and separately for singular/plu
 
 ## Release Status
 
-This release includes the model, annotation preprocessing, independent pretrained encoder loading, epoch-based training with resume and distributed execution, inference, evaluation, and analysis exports. All 26 unit and integration tests have passed in a Python 3.10 CPU environment. Two-process CPU forward/backward synchronization has also been validated without optimizer updates.
+This release includes the model, annotation preprocessing, independent pretrained encoder loading, epoch-based training with resume and distributed execution, inference, evaluation, and analysis exports. Validation coverage is documented in the [implementation notes](docs/consistency-audit.md).
 
 - **Pretrained weights:** not currently distributed. Inference and evaluation on real data require a compatible DRMN checkpoint.
 - **Runtime:** validated with the pure PyTorch reference implementation of deformable attention. GPU execution and performance have not been validated.
 - **Reproducibility:** computation paths and parameter compatibility have been checked; the reported paper metrics have not been re-evaluated using the original weights and dataset.
 
-Some modules were recovered from archived source and bytecode, and some dependencies were adapted. Known differences between the paper, archived implementation, and experiment configurations are documented in the [consistency report](docs/consistency-audit.md). The [workflow guide](docs/workflows.md) is in English; all supplementary audit and data documentation is also in English.
 
 ## Installation
 
@@ -122,7 +121,7 @@ python tools/train_epochs.py \
   --output artifacts/runs/drmn --epochs 20
 ```
 
-The runner supports gradient accumulation, epoch-boundary resume, validation, and `last.pth` / `best.pth` checkpoint saving. `torchrun` enables distributed execution. See the [workflow guide](docs/workflows.md) for commands, checkpoint requirements, and the newly defined batching protocol. This runner is a reconstruction, not a recovered copy of the original experiment launcher. Full training and GPU execution have not been validated.
+The runner supports gradient accumulation, epoch-boundary resume, validation, and `last.pth` / `best.pth` checkpoint saving. `torchrun` enables distributed execution. See the [workflow guide](docs/workflows.md) for commands, checkpoint requirements, and batching semantics. Training-protocol provenance and validation limits are documented in the [implementation notes](docs/consistency-audit.md).
 
 ## Smoke Test
 

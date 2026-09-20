@@ -1,6 +1,6 @@
 # Dataset download and preparation
 
-This guide describes how to obtain the assets required to use the repository. No real dataset was downloaded, extracted, or evaluated during release preparation. Model checkpoints are not included.
+This guide describes the images and annotations required for feature extraction and evaluation. Obtain datasets from their official providers; they are not distributed with this repository.
 
 ## Official sources
 
@@ -12,7 +12,7 @@ This guide describes how to obtain the assets required to use the repository. No
 | Asset layout and split definitions | [PNG repository](https://github.com/BCV-Uniandes/PNG#dataset-preparation) | Original dataset preparation instructions |
 | One-stage preprocessing reference | [PPMN repository](https://github.com/dzh19990407/PPMN) | Dataloader JSON generation procedure |
 
-Links were checked on September 19, 2026. The project page depends on JavaScript. If a download service is unavailable, consult the official repository or maintainers for an updated location.
+If a download service is unavailable, consult the official repository or maintainers for an updated location.
 
 The original PNG baseline's cached mask/semantic features are not interchangeable with this repository's four-level FPN and BERT NPZ format. Use the original images, panoptic annotations, and narrative annotations. Baseline proposal features are not required.
 
@@ -45,7 +45,7 @@ python tools/preprocess_annotations.py --data_dir /path/to/png --splits val2017
 python tools/preprocess_annotations.py --data_dir /path/to/png --splits train2017
 ```
 
-The script uses the bundled BERT vocabulary and does not download a model. It reads existing annotations and writes `png_coco_*_dataloader.json` alongside them, without requiring a DRMN checkpoint. It preserves the archived WordPiece, boxes, noun-vector, and label algorithm, replaces the hard-coded server output path, and refuses to overwrite existing output. Records with token-alignment failures are excluded following the original algorithm; retain the counts reported in the terminal.
+The script uses the bundled BERT vocabulary and does not download a model. It reads existing annotations and writes `png_coco_*_dataloader.json` alongside them, without requiring a DRMN checkpoint. It generates aligned WordPiece, box, noun-vector, and label fields, and refuses to overwrite existing output. Records with token-alignment failures are excluded following the original algorithm; retain the counts reported in the terminal.
 
 ## Extract features and evaluate
 
@@ -64,4 +64,4 @@ python tools/evaluate.py --config configs/drmn.yaml \
 
 Alternatively, feature extraction accepts separate `--fpn-weights` and `--bert-weights` without a trained DRMN head. See the [workflow guide](workflows.md) for sources and commands. `train_epochs.py` consumes the resulting features. Evaluation still requires compatible trained head weights; public PNG/PPMN checkpoints or frozen encoder weights cannot replace them.
 
-These real-data commands were not executed during release preparation. Datasets should be obtained from their official providers and are not repackaged here. Damaged local checkpoint backups are retained only as recovery evidence, not distributed as usable models.
+See [reproducibility notes](consistency-audit.md) for checkpoint availability and real-data validation status.
