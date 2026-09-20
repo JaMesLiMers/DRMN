@@ -29,7 +29,7 @@ Resume requires the same model/configuration, feature file contents and filename
 
 Each process handles one image at a time because image and phrase dimensions vary. Losses are averaged across images within each accumulation group; the last group uses its actual length. Normal effective batch size is process count × accumulation. For equal rank lengths, distributed sampling repeats a few samples when the dataset size is not divisible by process count. This is an explicit reconstructed protocol, not evidence of the historical batch size or exact training trajectory.
 
-A three-GPU launch can be configured as follows; GPU execution and full training remain unvalidated:
+The following three-GPU example requires a [CUDA-enabled environment](environment.md#gpu-environment-prerequisite); the default requirements install CPU-only builds. GPU execution and full training remain unvalidated:
 
 ```bash
 python -m torch.distributed.run --standalone --nproc_per_node=3 \

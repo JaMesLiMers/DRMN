@@ -41,3 +41,9 @@ The epoch runner is reconstructed from available implementation evidence. Its ba
 ## Checkpoints and reported results
 
 No usable original DRMN checkpoint is distributed. The paper's overall 62.9% Average Recall and grouped results have not been re-evaluated with original weights and real data. Structural compatibility and synthetic tests do not establish equivalent segmentation accuracy.
+
+## Source provenance metadata
+
+[source_manifest.json](source_manifest.json) records source locations and file hashes. Each `historical_status` entry preserves recovery and adaptation notes, including labels such as `imports_pending` and `runtime_unverified`. These labels describe earlier processing stages, not the current validation status. The validation coverage above describes the current release.
+
+`source_sha256` identifies archived source content; `sha256` identifies the reviewed destination content. `tools/check_sources.py` verifies destination hashes and syntax, and checks original source hashes when local archives are available. Hash verification does not establish runtime correctness.

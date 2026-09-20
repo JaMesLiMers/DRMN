@@ -2,7 +2,7 @@
 
 **Context Does Matter: End-to-end Panoptic Narrative Grounding with Deformable Attention Refined Matching Network**
 
-[Paper](https://arxiv.org/abs/2310.16616) · [Workflows](docs/workflows.md) · [Dataset Preparation](docs/dataset-download.md) · [Implementation Notes](docs/method-mapping.md) · [Reproducibility Status](docs/consistency-audit.md)
+[Paper](https://arxiv.org/abs/2310.16616) · [Workflows](docs/workflows.md) · [Dataset Preparation](docs/dataset-download.md) · [Method and Implementation](docs/method-mapping.md) · [Implementation Notes and Reproducibility](docs/consistency-audit.md)
 
 DRMN addresses **Panoptic Narrative Grounding**: given an image and a narrative caption, the model predicts a pixel-level segmentation mask for each target noun phrase. It incorporates visual context through multi-scale deformable attention and iteratively refines the image features associated with each phrase.
 
@@ -19,12 +19,11 @@ Evaluation uses Average Recall, reported overall and separately for singular/plu
 
 ## Release Status
 
-This release includes the model, annotation preprocessing, independent pretrained encoder loading, epoch-based training with resume and distributed execution, inference, evaluation, and analysis exports. Validation coverage is documented in the [implementation notes](docs/consistency-audit.md).
+This release includes the model, annotation preprocessing, independent pretrained encoder loading, epoch-based training with resume and distributed execution, inference, evaluation, and analysis exports. Validation coverage is documented in the [implementation notes and reproducibility](docs/consistency-audit.md).
 
 - **Pretrained weights:** not currently distributed. Inference and evaluation on real data require a compatible DRMN checkpoint.
 - **Runtime:** validated with the pure PyTorch reference implementation of deformable attention. GPU execution and performance have not been validated.
 - **Reproducibility:** computation paths and parameter compatibility have been checked; the reported paper metrics have not been re-evaluated using the original weights and dataset.
-
 
 ## Installation
 
@@ -121,7 +120,7 @@ python tools/train_epochs.py \
   --output artifacts/runs/drmn --epochs 20
 ```
 
-The runner supports gradient accumulation, epoch-boundary resume, validation, and `last.pth` / `best.pth` checkpoint saving. `torchrun` enables distributed execution. See the [workflow guide](docs/workflows.md) for commands, checkpoint requirements, and batching semantics. Training-protocol provenance and validation limits are documented in the [implementation notes](docs/consistency-audit.md).
+The runner supports gradient accumulation, epoch-boundary resume, validation, and `last.pth` / `best.pth` checkpoint saving. `torchrun` enables distributed execution. See the [workflow guide](docs/workflows.md) for commands, checkpoint requirements, and batching semantics. Training-protocol provenance and validation limits are documented in the [implementation notes and reproducibility](docs/consistency-audit.md).
 
 ## Smoke Test
 
@@ -141,7 +140,7 @@ python tools/train.py \
   --output artifacts/runs/backward_smoke
 ```
 
-This test uses synthetic inputs and random initialization to validate the computation pipeline; it does not measure model quality. `configs/smoke.yaml` is a test configuration. The provenance and unresolved settings in `configs/drmn.yaml` are described in the [implementation notes](docs/method-mapping.md).
+This test uses synthetic inputs and random initialization to validate the computation pipeline; it does not measure model quality. `configs/smoke.yaml` is a test configuration. The provenance and unresolved settings in `configs/drmn.yaml` are described in the [implementation notes and reproducibility](docs/consistency-audit.md).
 
 ## Analysis and Ablations
 

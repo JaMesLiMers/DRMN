@@ -20,3 +20,15 @@ PYTHONPATH=.bootstrap python3 -m virtualenv .venv
 ```
 
 The image encoder uses a torchvision R101/FPN adapter. Deformable attention uses a pure PyTorch reference implementation, so the default CPU setup does not require CUDA extension compilation. GPU execution, mixed precision, and performance benchmarks remain unvalidated. See [implementation notes](consistency-audit.md).
+
+## GPU environment prerequisite
+
+The pinned requirements install CPU-only PyTorch and torchvision builds. They cannot run the CUDA commands in the workflow guide. Before using `--device cuda`, configure a separate environment with mutually compatible CUDA-enabled PyTorch and torchvision builds and an appropriate NVIDIA driver. Do not reapply the CPU-pinned requirements over that environment.
+
+Confirm CUDA availability before launching a GPU job:
+
+```bash
+python -c "import torch; print(torch.__version__); print(torch.version.cuda); print(torch.cuda.is_available())"
+```
+
+`torch.version.cuda` must be non-null and `torch.cuda.is_available()` must return `True`. These checks confirm CUDA availability only; GPU correctness and full training have not been validated for this release.

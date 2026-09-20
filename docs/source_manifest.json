@@ -2,14 +2,14 @@
   {
     "source": "models/head_model/cross_entropy_loss.py",
     "sha256": "460b0849f731805911a48cfa66b81f012e664c6c0d833f7dc712d8171031cf13",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/head_model/cross_entropy_loss.py",
     "source_sha256": "460b0849f731805911a48cfa66b81f012e664c6c0d833f7dc712d8171031cf13",
     "pre_adaptation_sha256": "460b0849f731805911a48cfa66b81f012e664c6c0d833f7dc712d8171031cf13"
   },
   {
     "source": "models/head_model/deform_encoder_head.py",
-    "status": "recovered_from_cpython37_bytecode_runtime_unverified; imports_or_device_adapted",
+    "historical_status": "recovered_from_cpython37_bytecode_runtime_unverified; imports_or_device_adapted",
     "original_sha256": "cb64750069fe2fb54dc129ecb4cc6f9e0aa7c5926b1b02d6a5823851fd516b6f",
     "destination": "drmn/models/head_model/deform_encoder_head.py",
     "sha256": "cb167c5df8115ee6cf6e2b44b79b12fef54b18cda76d4a429541a6f4ea47b388",
@@ -20,7 +20,7 @@
   {
     "source": "models/head_model/deform_encoder_head_no_encoder.py",
     "sha256": "6fc48824abb375db89a23f830c89533508f15bd4164770bb393b05755a3ab1ae",
-    "status": "copied_without_changes_imports_pending; imports_or_device_adapted",
+    "historical_status": "copied_without_changes_imports_pending; imports_or_device_adapted",
     "destination": "drmn/models/head_model/deform_encoder_head_no_encoder.py",
     "source_sha256": "49e45dc85290b8bf19af68219c588ab241763085b944c2a3e4d3151512817064",
     "pre_adaptation_sha256": "49e45dc85290b8bf19af68219c588ab241763085b944c2a3e4d3151512817064"
@@ -28,7 +28,7 @@
   {
     "source": "models/head_model/deform_img_encoder.py",
     "sha256": "c3cf40532e478723c80470fc109bfc65836c1c782f150cce7e263ec52cc0143c",
-    "status": "copied_without_changes_imports_pending; imports_or_device_adapted",
+    "historical_status": "copied_without_changes_imports_pending; imports_or_device_adapted",
     "destination": "drmn/models/head_model/deform_img_encoder.py",
     "source_sha256": "ea52f2886a89d6a54c49080ba109b930239a458de1c7b6884289c37f5ba9ffc9",
     "pre_adaptation_sha256": "ea52f2886a89d6a54c49080ba109b930239a458de1c7b6884289c37f5ba9ffc9"
@@ -36,14 +36,14 @@
   {
     "source": "models/head_model/deform_iter_head.py",
     "sha256": "319d95766abea4fa3b0b4a569986dfa4d000cb9d26727554da2acf6f6bb789c1",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/head_model/deform_iter_head.py",
     "source_sha256": "54a1e03665802a21ffad97ad15ab517167db25ab5a321780b0459d480b4d38bf",
     "pre_adaptation_sha256": "54a1e03665802a21ffad97ad15ab517167db25ab5a321780b0459d480b4d38bf"
   },
   {
     "source": "models/head_model/deform_txt_decoder.py",
-    "status": "recovered_from_cpython37_bytecode_runtime_unverified; imports_or_device_adapted",
+    "historical_status": "recovered_from_cpython37_bytecode_runtime_unverified; imports_or_device_adapted",
     "original_sha256": "02ff1b4ec2322f5319d994db73c5830d6fb268682b5ead07bfb5c93cd375f0d9",
     "destination": "drmn/models/head_model/deform_txt_decoder.py",
     "sha256": "ae5e9f894d937b8402eaee682e9dd56bf4ca53d70291021b7f238134a1aef904",
@@ -54,7 +54,7 @@
   {
     "source": "models/head_model/deform_txt_encoder.py",
     "sha256": "bbd138816a030ffd6f811ea1a8ff0d23280d3f628fac5371df9cdbe77edca215",
-    "status": "copied_without_changes_imports_pending; imports_or_device_adapted",
+    "historical_status": "copied_without_changes_imports_pending; imports_or_device_adapted",
     "destination": "drmn/models/head_model/deform_txt_encoder.py",
     "source_sha256": "46d2f322b3c9fabf0c53ed2fc23f1235b671624f056d992a030e70f782fd6f53",
     "pre_adaptation_sha256": "46d2f322b3c9fabf0c53ed2fc23f1235b671624f056d992a030e70f782fd6f53"
@@ -62,7 +62,7 @@
   {
     "source": "models/head_model/dice_loss.py",
     "sha256": "c7886696d42df6f8fc754d477ff7e192606d84dd11eb49b8e8a2b5ffd54c1977",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/head_model/dice_loss.py",
     "source_sha256": "c7886696d42df6f8fc754d477ff7e192606d84dd11eb49b8e8a2b5ffd54c1977",
     "pre_adaptation_sha256": "c7886696d42df6f8fc754d477ff7e192606d84dd11eb49b8e8a2b5ffd54c1977"
@@ -70,7 +70,7 @@
   {
     "source": "models/head_model/head_net.py",
     "sha256": "677a7e395a3849edf6460cf7cffa7cabd8fa43906651fe1e6206970bf16a5557",
-    "status": "copied_without_changes_imports_pending; explicit_structural_variants_or_diagnostic_export_added",
+    "historical_status": "copied_without_changes_imports_pending; explicit_structural_variants_or_diagnostic_export_added",
     "destination": "drmn/models/head_model/head_net.py",
     "source_sha256": "7cd1d93a016ff854e55bcbcfd79b378f22538d3888deed5cb81bed38b78d429f",
     "pre_adaptation_sha256": "7cd1d93a016ff854e55bcbcfd79b378f22538d3888deed5cb81bed38b78d429f"
@@ -78,7 +78,7 @@
   {
     "source": "models/head_model/kernel_head_new.py",
     "sha256": "a919bc8761149eb3ddc7f116271eca69d1a3305ab242f874b11c34846dcef215",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/head_model/kernel_head_new.py",
     "source_sha256": "3eae7b00fcc35ce93d19242271d08e62f62d3960569010660f7fd9fba0549963",
     "pre_adaptation_sha256": "3eae7b00fcc35ce93d19242271d08e62f62d3960569010660f7fd9fba0549963"
@@ -86,7 +86,7 @@
   {
     "source": "models/head_model/kernel_update_head.py",
     "sha256": "626e65d750450e68e0b1affb485808d3503ce94327ba0054eb4539e46f39cb20",
-    "status": "copied_without_changes_imports_pending; explicit_structural_variants_or_diagnostic_export_added",
+    "historical_status": "copied_without_changes_imports_pending; explicit_structural_variants_or_diagnostic_export_added",
     "destination": "drmn/models/head_model/kernel_update_head.py",
     "source_sha256": "2adc6ab01ab09bcb1ae93371cf160b4d677c66a2c4ba85083b499d5557fc5985",
     "pre_adaptation_sha256": "2adc6ab01ab09bcb1ae93371cf160b4d677c66a2c4ba85083b499d5557fc5985"
@@ -94,7 +94,7 @@
   {
     "source": "models/head_model/loss_utils.py",
     "sha256": "d674643f733fc14ca13ab58686ed0477a79dd849ab2bbb4cc5c22ca346c1813a",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/head_model/loss_utils.py",
     "source_sha256": "27e95438a7a878cd623a9952e577fb776e875e93c372909ade8ee7086585b099",
     "pre_adaptation_sha256": "27e95438a7a878cd623a9952e577fb776e875e93c372909ade8ee7086585b099"
@@ -102,7 +102,7 @@
   {
     "source": "models/head_model/multiheadattention.py",
     "sha256": "e62b058a0c415bc26b20bc5fd8d2e208e40343e9f7011636ba0cb3681dbd6578",
-    "status": "copied_without_changes_imports_pending; imports_or_device_adapted",
+    "historical_status": "copied_without_changes_imports_pending; imports_or_device_adapted",
     "destination": "drmn/models/head_model/multiheadattention.py",
     "source_sha256": "6a7ae5801f75f6e73afb575aa2c167d71e946e2bf5ff15fc160ccfc69cde0dfa",
     "pre_adaptation_sha256": "6a7ae5801f75f6e73afb575aa2c167d71e946e2bf5ff15fc160ccfc69cde0dfa"
@@ -110,7 +110,7 @@
   {
     "source": "models/head_model/positional_encoding.py",
     "sha256": "94e5491a86b740bd480d8da41714404de102ba1fe62fb2fc71b9812235e146d5",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/head_model/positional_encoding.py",
     "source_sha256": "94e5491a86b740bd480d8da41714404de102ba1fe62fb2fc71b9812235e146d5",
     "pre_adaptation_sha256": "94e5491a86b740bd480d8da41714404de102ba1fe62fb2fc71b9812235e146d5"
@@ -118,7 +118,7 @@
   {
     "source": "models/head_model/position_encoding.py",
     "sha256": "f46b164aec261a3cc3b4675b1d2bed0901ceea7ce8fe48177a852ee6ad4e68cf",
-    "status": "copied_without_changes_imports_pending; imports_or_device_adapted",
+    "historical_status": "copied_without_changes_imports_pending; imports_or_device_adapted",
     "destination": "drmn/models/head_model/position_encoding.py",
     "source_sha256": "59b0c17a587494d6d74c3e1562276cebd763d78b56d3f62a8b1bd332de52e1b6",
     "pre_adaptation_sha256": "59b0c17a587494d6d74c3e1562276cebd763d78b56d3f62a8b1bd332de52e1b6"
@@ -126,7 +126,7 @@
   {
     "source": "models/head_model/semantic_fpn_wrapper_new.py",
     "sha256": "0d1e069455e4e60db764a6aaad0bd4e0b20d3cb0904bb463a80486ae79b0e110",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/head_model/semantic_fpn_wrapper_new.py",
     "source_sha256": "e429841a02a9d73f20afdf405d51687b589db99a23eab3764981e8cf99e86cc8",
     "pre_adaptation_sha256": "e429841a02a9d73f20afdf405d51687b589db99a23eab3764981e8cf99e86cc8"
@@ -134,7 +134,7 @@
   {
     "source": "models/encoder_bert.py",
     "sha256": "f57828dd7def3524172165be0fa4c929c459964d1e663014952b9e4730f5f8b7",
-    "status": "copied_without_changes_imports_pending; imports_or_device_adapted",
+    "historical_status": "copied_without_changes_imports_pending; imports_or_device_adapted",
     "destination": "drmn/models/encoder_bert.py",
     "source_sha256": "0ae804994028c51e3cf216b0b6374404126b344d54e2307a9182ea4eb1fe731a",
     "pre_adaptation_sha256": "0ae804994028c51e3cf216b0b6374404126b344d54e2307a9182ea4eb1fe731a"
@@ -142,14 +142,14 @@
   {
     "source": "models/extract_fpn_with_ckpt_load_from_detectron2.py",
     "sha256": "698d58a9ec18f77f6f0560db3590212ddc10d757ae523a1c1cbcd28b82c2476f",
-    "status": "legacy_adapter_archived_replaced_by_portable_pipeline",
+    "historical_status": "legacy_adapter_archived_replaced_by_portable_pipeline",
     "source_sha256": "698d58a9ec18f77f6f0560db3590212ddc10d757ae523a1c1cbcd28b82c2476f",
     "archived_destination": "artifacts/legacy_adapters/extract_fpn_with_ckpt_load_from_detectron2.py"
   },
   {
     "source": "models/modeling.py",
     "sha256": "7804abb93a5871e7fcb3385363dabe2b457fd4d700e34beae79b24e74a3f05b8",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/modeling.py",
     "source_sha256": "5e39c6489c2c86017017985d56723c48c57639fc90ffaf40b6c1ad4644daa961",
     "pre_adaptation_sha256": "5e39c6489c2c86017017985d56723c48c57639fc90ffaf40b6c1ad4644daa961"
@@ -157,7 +157,7 @@
   {
     "source": "models/tokenization.py",
     "sha256": "535cab33c66a8396587d25e1a44ac866b5936839742e92ff9c15357e8419b3eb",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/models/tokenization.py",
     "source_sha256": "5077cc1c1e133e7465735323c55c283d91b2d6a93a37bc31866433e16a6553ae",
     "pre_adaptation_sha256": "5077cc1c1e133e7465735323c55c283d91b2d6a93a37bc31866433e16a6553ae"
@@ -165,14 +165,14 @@
   {
     "source": "data/panoptic_narrative_grounding.py",
     "sha256": "71393d1c4179779c573cb4a03915c86ea9a8602e134ec41623c4c21cd39efff6",
-    "status": "legacy_adapter_archived_replaced_by_portable_pipeline",
+    "historical_status": "legacy_adapter_archived_replaced_by_portable_pipeline",
     "source_sha256": "71393d1c4179779c573cb4a03915c86ea9a8602e134ec41623c4c21cd39efff6",
     "archived_destination": "artifacts/legacy_adapters/panoptic_narrative_grounding.py"
   },
   {
     "source": "utils/meters.py",
     "sha256": "d0551f6b43a98c840169e13adeca333d8a223a61ab8173ff27a2402a43bc7905",
-    "status": "copied_without_changes_imports_pending",
+    "historical_status": "copied_without_changes_imports_pending",
     "destination": "drmn/evaluation/meters.py",
     "source_sha256": "c3ad3bdf53504395b65700cdd90587bf8cd38a73861f99ba5f0423c7bb3a07a8",
     "pre_adaptation_sha256": "c3ad3bdf53504395b65700cdd90587bf8cd38a73861f99ba5f0423c7bb3a07a8"
